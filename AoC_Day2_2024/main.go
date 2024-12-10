@@ -44,7 +44,7 @@ func isDescending(a []int) bool {
 	return false
 }
 func main() {
-	file, err := os.Open("test.txt")
+	file, err := os.Open("input.txt")
 	if err != nil {
 		fmt.Println("Error opening input.txt", err)
 		return
