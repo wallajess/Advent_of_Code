@@ -3,11 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	orderingRules := getOrderingRules("test_ordering.txt")
+	orderingRules := getOrderingRules("ordering.txt")
 	fmt.Printf("Ordering rules: %v\n", orderingRules)
-	updatePages := getUpdatePages("test_update.txt")
+	updatePages := getUpdatePages("update.txt")
 	fmt.Printf("Update pages: %v\n", updatePages)
-	correctOrder := checkUpdateOrder(orderingRules, updatePages)
+	correctOrder, incorrect := checkUpdateOrder(orderingRules, updatePages)
 
 	var result int
 	for _, midNum := range correctOrder {
@@ -16,5 +16,19 @@ func main() {
 		fmt.Println("Middle number:", midNum)
 	}
 	fmt.Println(result)
+
+	var middleCorrected []int
+	correctedRows := correctRows(orderingRules, incorrect)
+	for _, row := range correctedRows {
+		middleCorrected = append(middleCorrected, row[len(row)/2])
+	}
+
+	var sumCorrected int
+	for _, midNum := range middleCorrected {
+		sumCorrected += midNum
+		fmt.Println("Middle number:", midNum)
+	}
+
+	fmt.Println(sumCorrected)
 
 }

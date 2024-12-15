@@ -5,8 +5,9 @@ import (
 	"slices"
 )
 
-func checkUpdateOrder(orderingRules [][]int, updatePages [][]int) []int {
+func checkUpdateOrder(orderingRules [][]int, updatePages [][]int) ([]int, [][]int) {
 	var middleNums []int
+	var incorrect [][]int
 
 	for _, row := range updatePages {
 
@@ -18,6 +19,7 @@ func checkUpdateOrder(orderingRules [][]int, updatePages [][]int) []int {
 				//Ensure correct order of rule numbers
 				if slices.Index(row, rule[0]) > slices.Index(row, rule[1]) {
 					correct = false
+
 				}
 
 			}
@@ -27,7 +29,10 @@ func checkUpdateOrder(orderingRules [][]int, updatePages [][]int) []int {
 			fmt.Printf("This row is correct for all rules: %v\n", row)
 			middleNums = append(middleNums, row[len(row)/2])
 		}
+		if !correct {
+			incorrect = append(incorrect, row)
+		}
 
 	}
-	return middleNums
+	return middleNums, incorrect
 }
