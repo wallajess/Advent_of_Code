@@ -6,7 +6,7 @@ func findGuard(patrolMap [][]string) []int {
 	for i, row := range patrolMap {
 		for j, position := range row {
 			if position == "^" {
-				startingPoint = make([]int, i, j)
+				startingPoint[0], startingPoint[1] = i, j
 			}
 		}
 	}
@@ -51,4 +51,32 @@ func turn90degrees(patrolPath [][]string, startingPoint []int) string {
 
 	}
 	return guard
+}
+
+func navigateMap(patrolPath [][]string, startingPoint []int, counter int) ([]int, int) {
+	var newPosition []int
+	//Determine guard's position
+	guard := patrolPath[startingPoint[0]][startingPoint[1]]
+
+	switch guard {
+	case "^":
+		newPosition = moveUp(patrolPath, startingPoint)
+	case ">":
+		newPosition = moveLeft(patrolPath, startingPoint)
+	case "v":
+		newPosition = moveDown(patrolPath, startingPoint)
+	case "<":
+		newPosition = moveRight(patrolPath, startingPoint)
+	}
+	if patrolPath[newPosition[0]][newPosition[1]] != "#" {
+		patrolPath[newPosition[0]][newPosition[1]] = guard
+		patrolPath[startingPoint[0]][startingPoint[1]] = "X"
+		counter++
+
+	}
+	if patrolPath[newPosition[0]][newPosition[1]] == "#" {
+		newPosition = startingPoint
+		guard = turn90degrees(patrolPath, startingPoint)
+	}
+	return newPosition, counter
 }

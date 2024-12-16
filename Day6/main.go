@@ -1,29 +1,21 @@
 package main
 
+import "fmt"
+
 func main() {
-	patrolMap := getMap("test_map.txt")
+	patrolPath := getMap("test_map.txt")
 
-	//Determine where the guard is
-	position := findGuard(patrolMap)
+	startingPoint := findGuard(patrolPath)
+	row, col := startingPoint[0], startingPoint[1]
+	counter := 0
 
-	//Determine guard's position
-	guard = patrolMap[position[0]][position[1]]
-
-	switch guard {
-	case "^":
-		newPosition := moveUp(patrolMap, position)
-		if patrolMap[newPosition[0]][newPosition[1]] == "." {
-			
+	for {
+		navigateMap(patrolPath, startingPoint, counter)
+		counter++
+		if row < 0 || row >= len(patrolPath) || col < 0 || col >= len(patrolPath[0]) {
+			break
 		}
-
-		}
-		newPosition = moveUp
-	case ">":
-		guard = "v"
-	case "v":
-		guard = "<"
-	case "<":
-		guard = "^"
-
 	}
+
+	fmt.Println()
 }
